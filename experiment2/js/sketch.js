@@ -14,6 +14,17 @@ const VALUE2 = 2;
 let myInstance;
 let canvasContainer;
 var centerHorz, centerVert;
+let seed = 0;
+const grassColor = "#74740d";
+const skyColor = "#69ade4";
+const stoneColor = "#858290";
+let houseColor = ["white", "green", "blue", "yellow", "black", "magenta", "red"];
+let treeColor = "#33330b";
+const MountainColor = "#B29995";
+const MountainColor1 = "#B9A19F";
+const MountainColor2 = "#BEA19B";
+const MountainColor3 = "#C4A9A2";
+const MountainColor4 = "#98888B";
 
 class MyClass {
     constructor(param1, param2) {
@@ -57,23 +68,67 @@ function draw() {
   // call a method on the instance
   myInstance.myMethod();
 
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
+  randomSeed(seed);
+  
   noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
-
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+  fill(skyColor);
+  rect(0, 0, width, height / 2);
+  fill(grassColor);
+  rect(0, height / 2, width, height / 2);
+  
+  drawMountain(MountainColor4, 90);
+  drawMountain(MountainColor, 50);
+  drawMountain(MountainColor1, 60);
+  drawMountain(MountainColor2, 70);
+  drawMountain(MountainColor3, 80);
+  const homesAmount = 20*random();
+  for (let i = 0; i < homesAmount; i++) {
+    const c = round(6*random());
+    console.log(c);
+    let color = houseColor[c];
+    drawHouse(color);
+  }
+  const treesAmount =  14*random();
+  for (let i = 0; i < treesAmount; i++){
+    drawTree();
+  }
+  
+  
+}
+function drawMountain(color, heightM){
+  fill(color);
+  beginShape();
+  vertex(0, height / 2);
+  const steps =10;
+  for (let i = 0; i < steps + 1; i++) {
+    let x = (width * i) / steps;
+    let y =
+      height / 2 - (random() * random() * random() * height) / 2 - height / heightM;
+    vertex(x, y);
+  }
+  vertex(width, height / 2);
+  endShape(CLOSE);
+}
+function drawTree(){
+  fill(treeColor);
+  const scrub = mouseX/width;  
+  let z = random();
+  let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
+  let s = width / 50 / z;
+  let y = height / 2 + height / 20 / z;
+  triangle(x, y - s, x - s / 4, y, x + s / 4, y);
+}
+function drawHouse(houseC){
+  fill(stoneColor);
+  const scrub = mouseX/width;  
+  let z = random();
+  let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
+  let s = width / 50 / z;
+  let y = height / 2 + height / 20 / z;
+  triangle(x, y - s/2, x - s / 4, y, x + s / 4, y);
+  //console.log("hello");
+  fill(houseC);
+  //console.log("Color = "+houseColor[c]);
+  square(x+s/4, y+s/2,(x-(x+s/4))*2);
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
-}
