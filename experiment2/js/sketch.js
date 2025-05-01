@@ -81,10 +81,10 @@ function draw() {
   drawMountain(MountainColor1, 60);
   drawMountain(MountainColor2, 70);
   drawMountain(MountainColor3, 80);
-  const homesAmount = 20*random();
+  const homesAmount = 15*random()+7;
   for (let i = 0; i < homesAmount; i++) {
     const c = round(6*random());
-    console.log(c);
+    //console.log(c);
     let color = houseColor[c];
     drawHouse(color);
   }
