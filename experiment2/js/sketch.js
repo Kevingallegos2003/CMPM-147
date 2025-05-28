@@ -91,8 +91,8 @@ function draw() {
   const treesAmount =  14*random();
   for (let i = 0; i < treesAmount; i++){
     drawTree();
+    drawRoad();
   }
-  
   
 }
 function drawMountain(color, heightM){
@@ -130,5 +130,15 @@ function drawHouse(houseC){
   fill(houseC);
   //console.log("Color = "+houseColor[c]);
   square(x+s/4, y+s/2,(x-(x+s/4))*2);
+}
+
+function drawRoad(){
+  fill(stoneColor);
+  const scrub = mouseX/width;  
+  let z = random();
+  let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
+  let s = width / 50 / z;
+  let y = height / 2 + height;
+  triangle(x, y - s, x - s / 4, y, x + s / 4, y);
 }
 
