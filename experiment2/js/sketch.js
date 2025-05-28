@@ -81,19 +81,22 @@ function draw() {
   drawMountain(MountainColor1, 60);
   drawMountain(MountainColor2, 70);
   drawMountain(MountainColor3, 80);
-  const homesAmount = 15*random()+7;
-  for (let i = 0; i < homesAmount; i++) {
-    const c = round(6*random());
-    //console.log(c);
-    let color = houseColor[c];
-    drawHouse(color);
+  for(let i = 0; i< 2*random()+3; i++){
+      drawRoad();
   }
-  const treesAmount =  14*random();
-  for (let i = 0; i < treesAmount; i++){
-    drawTree();
-    drawRoad();
+  for(let j = height/2-70; j > 0; j-=.25){
+  const homesAmount = 2*random()+3;
+    const treesAmount =  4*random();
+    for (let i = 0; i < treesAmount; i++){
+      drawTree(j);
+    }
+    for (let i = 0; i < homesAmount; i++) {
+      const c = round(6*random());
+      //console.log(c);
+      let color = houseColor[c];
+      drawHouse(color, j);
+    }
   }
-  
 }
 function drawMountain(color, heightM){
   fill(color);
@@ -109,19 +112,19 @@ function drawMountain(color, heightM){
   vertex(width, height / 2);
   endShape(CLOSE);
 }
-function drawTree(){
+function drawTree(heightval){
   fill(treeColor);
   const scrub = mouseX/width;  
-  let z = random();
+  let z = heightval;
   let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
   let s = width / 50 / z;
   let y = height / 2 + height / 20 / z;
   triangle(x, y - s, x - s / 4, y, x + s / 4, y);
 }
-function drawHouse(houseC){
+function drawHouse(houseC,heightval){
   fill(stoneColor);
   const scrub = mouseX/width;  
-  let z = random();
+  let z = heightval;
   let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
   let s = width / 50 / z;
   let y = height / 2 + height / 20 / z;
@@ -136,9 +139,9 @@ function drawRoad(){
   fill(stoneColor);
   const scrub = mouseX/width;  
   let z = random();
-  let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
+  let x = width * ((random()*1 + (scrub/50 + millis() / 500000.0) / z) % 1);
   let s = width / 50 / z;
-  let y = height / 2 + height;
-  triangle(x, y - s, x - s / 4, y, x + s / 4, y);
+  let y = height / 2;
+  triangle(x-s/2, y+height/2 , x - s / 4, height/2, x + s / 4, y+height/2);
 }
 
