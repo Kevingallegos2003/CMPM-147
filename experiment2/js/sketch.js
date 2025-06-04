@@ -15,6 +15,7 @@ let myInstance;
 let canvasContainer;
 var centerHorz, centerVert;
 let seed = 0;
+var Canvasx = 0;
 const grassColor = "#74740d";
 const skyColor = "#69ade4";
 const stoneColor = "#858290";
@@ -64,6 +65,7 @@ function setup() {
 
 // draw() function is called repeatedly, it's the main animation loop
 function draw() {
+  Canvasx++;
   background(220);    
   // call a method on the instance
   myInstance.myMethod();
@@ -81,7 +83,7 @@ function draw() {
   drawMountain(MountainColor1, 60);
   drawMountain(MountainColor2, 70);
   drawMountain(MountainColor3, 80);
-  for(let i = 0; i< 2*random()+3; i++){
+  for(let i = 0; i< 2*random()+2; i++){
       drawRoad();
   }
   for(let j = height/2-70; j > 0; j-=.25){
@@ -89,6 +91,7 @@ function draw() {
     const treesAmount =  4*random();
     for (let i = 0; i < treesAmount; i++){
       drawTree(j);
+      //drawRoad(j);
     }
     for (let i = 0; i < homesAmount; i++) {
       const c = round(6*random());
@@ -96,6 +99,7 @@ function draw() {
       let color = houseColor[c];
       drawHouse(color, j);
     }
+    //if(j % 50 == 0){drawRoad(j);}
   }
 }
 function drawMountain(color, heightM){
@@ -114,7 +118,7 @@ function drawMountain(color, heightM){
 }
 function drawTree(heightval){
   fill(treeColor);
-  const scrub = mouseX/width;  
+  const scrub = Canvasx/width;  
   let z = heightval;
   let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
   let s = width / 50 / z;
@@ -123,7 +127,7 @@ function drawTree(heightval){
 }
 function drawHouse(houseC,heightval){
   fill(stoneColor);
-  const scrub = mouseX/width;  
+  const scrub = Canvasx/width;  
   let z = heightval;
   let x = width * ((random() + (scrub/50 + millis() / 500000.0) / z) % 1);
   let s = width / 50 / z;
@@ -137,11 +141,14 @@ function drawHouse(houseC,heightval){
 
 function drawRoad(){
   fill(stoneColor);
-  const scrub = mouseX/width;  
+  const scrub = Canvasx/width;  
   let z = random();
   let x = width * ((random()*1 + (scrub/50 + millis() / 500000.0) / z) % 1);
   let s = width / 50 / z;
   let y = height / 2;
   triangle(x-s/2, y+height/2 , x - s / 4, height/2, x + s / 4, y+height/2);
+  rect(x-s, height/2+s/z, 700, 5);
+  rect(x-s, height/2+s/z+30, -700, 5);
+  //rect(x-s/2,y,s,y);
 }
 
